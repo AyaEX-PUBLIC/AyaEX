@@ -33,6 +33,7 @@ Each [release](https://github.com/AyaEX-PUBLIC/AyaEX/releases) has these files:
 | --- | --- |
 | `AyaEX-Web-<version>.tar.gz` | The WebAssembly app: the Player, Studio and browser-hosted games. An AyaEX site serves it at `/runtime`. |
 | `AyaEX-Server-linux-x64-<version>.tar.gz` | `Aya.Server` for x86-64 Linux and the files it runs with. It runs gameservers and avatar renders for an AyaEX site. |
+| `AyaEX-Server-linux-arm64-<version>.tar.gz` | The same for 64-bit Arm Linux (since 2026.11.2) |
 | `AyaEX-WiiU-<version>.wuhb` | The Wii U app |
 | `AyaEX-Switch-<version>.nro` | The Nintendo Switch homebrew app |
 | `SHA256SUMS` | Checksums of the files above. Check them with `sha256sum -c SHA256SUMS`. |
@@ -49,13 +50,17 @@ tar -xzf AyaEX-Web-<version>.tar.gz
 tar -xzf AyaEX-Server-linux-x64-<version>.tar.gz
 ```
 
+On a 64-bit Arm machine, unpack `AyaEX-Server-linux-arm64-<version>.tar.gz`
+instead of the x64 server.
+
 The archives unpack into `aya-dev/`, laid out like the client's build tree,
 which is where MercuryCore and MercuryRCC look for it. Then follow
 MercuryCore's README:
 
 - `aya/setup-data.sh` makes the web app the site's stable client.
 - `RCC_EXE` in MercuryRCC's `Proxy/.env` is the absolute path of
-  `aya-dev/build/x64-linux-rel/bin/Aya.Server`, and `--contentPath` in
+  `aya-dev/build/x64-linux-rel/bin/Aya.Server` (on Arm,
+  `aya-dev/build/arm64-linux-rel/bin/Aya.Server`), and `--contentPath` in
   `RCC_ARGS` is the absolute path of `aya-dev/client/resources/content`.
 
 To update, unpack a newer release into a fresh `aya-dev/`. Run MercuryCore's
@@ -65,7 +70,7 @@ playing.
 
 ### Server requirements
 
-`Aya.Server` needs x86-64 Linux with glibc 2.38 or newer and GCC 13's
+`Aya.Server` needs x86-64 or 64-bit Arm Linux with glibc 2.38 or newer and GCC 13's
 libstdc++, as on Debian 13 or Ubuntu 24.04 and later. On Debian or Ubuntu,
 install its libraries with:
 
